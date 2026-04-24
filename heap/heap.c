@@ -76,7 +76,7 @@ void printHeap(Heap h) {
  * @return The element with the smallest priority.
  */
 int getElement(Heap h) {
-    return 0;
+    return h.heap[0];
 }
 
 /**
@@ -86,6 +86,22 @@ int getElement(Heap h) {
  * @param priority The priority of the element to insert.
  */
 void insertHeap(Heap *h, int element, double priority) {
+    // place the element in the last case
+    int pos = h->nbElements;
+    h->heap[pos] = element;
+    h->position[element] = pos;
+    h->priority[element] = priority;
+    h->nbElements++;
+    //percolate up
+    while (pos>0){
+        int father=(pos-1)/2;
+        if(h->priority[h->heap[father]]<h->priority[h->heap[pos]]){
+            swap(h,father,pos);
+            pos=father;
+        }else{
+            break; //the stack is correct, we stop
+        }
+    }
     return;
 }
 
