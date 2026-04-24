@@ -154,8 +154,47 @@ void modifyPriorityHeap(Heap *h, int element, double priority) {
  * @param h A pointer to the Heap data structure to remove the element from.
  * @return The element with the smallest priority that was removed from the Heap data structure.
  */
+/*key steps
+Extraction: It stores heap[0] in memory to return it at the end.
+
+Replacement: It takes the very last element of the array and moves it to the root position.
+
+Repair (Percolate Down): This element is likely too large to stay at the root, so the while loop moves it down to its correct position.
+*/
 int removeElement(Heap *h) {
-    return 0;
+    int minElement = h->heap[0]; // la racine = l'élément de plus faible priorité
+    h->nbElements--;
+     if (h->nbElements > 0) {
+        // On place le dernier élément à la racine
+        swap(h, 0, h->nbElements);
+        h->position[minElement] = -1; //IMPORTANT
+
+
+        int pos = 0;
+        int n = h->nbElements;
+        while (1) {
+            int left  = 2 * pos + 1;
+            int right = 2 * pos + 2;
+            int smallest = pos;
+
+            if (left < n && h->priority[h->heap[left]] < h->priority[h->heap[smallest]]) {
+                smallest = left;
+            }
+            if (right < n && h->priority[h->heap[right]] < h->priority[h->heap[smallest]]) {
+                smallest = right;
+            }
+
+            if (smallest != pos) {
+                swap(h, smallest, pos);
+                pos = smallest;
+            } else {
+                break;
+            }
+        }
+    } else {
+        h->position[minElement] = -1;
+    }
+    return minElement;
 }
 
 
