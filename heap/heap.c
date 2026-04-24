@@ -102,7 +102,6 @@ void insertHeap(Heap *h, int element, double priority) {
             break; //the stack is correct, we stop
         }
     }
-    return;
 }
 
 /**
@@ -112,7 +111,41 @@ void insertHeap(Heap *h, int element, double priority) {
  * @param priority The new priority of the element.
  */
 void modifyPriorityHeap(Heap *h, int element, double priority) {
-    return;
+    h->priority[element]=priority;
+    int pos=h->position[element];
+    //percolate up 
+    while (pos>0){
+        int father=(pos-1)/2;
+        if(h->priority[h->heap[father]] > h->priority[h->heap[pos]]){
+            swap(h,father,pos);
+            pos=father;    
+        }
+    }
+    //percolate down
+    while(1){
+        int n = h->nbElements;
+
+        int left  = 2*pos + 1;
+        int right = 2*pos + 2;
+        int smallest=pos;
+        //One swap is better than two because it reduces memory writes. complexity
+        //In a heap, a swap involves updating multiple arrays (heap, position, and sometimes priority).
+        //By identifying the smallest child first, you move the parent only once to its correct destination
+        //for that level, rather than moving it through an intermediate position.
+        
+        if(left<n && h->priority[h->heap[left]] < h->priority[h->heap[smallest]]){
+            smallest=left;
+        }
+        if(right<n && h->priority[h->heap[right]] < h->priority[h->heap[smallest]]){
+            smallest=right;
+        }
+        if(smallest!=pos){
+            swap(h,smallest,pos); //one swap
+            pos=smallest;
+        }else{
+            break; //stack correct
+        }
+    }
 }
 
 
