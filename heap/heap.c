@@ -47,7 +47,27 @@ Heap* createHeap(int n) {
  * @param h The Heap data structure to print.
  */
 void printHeap(Heap h) {
-    return;
+    printf("n: %d\n", h.n);
+    printf("nbElements: %d\n", h.nbElements);
+    printf("position: [");
+    int i,j,k;
+    for (i =0; i<h.n;i++){
+        printf("%d", h.position[i]);
+        if(i<h.n-1) printf(","); //visually pleasing
+    }
+    printf("]");
+    printf("priority:[");
+    for(j=0; j<h.n ; j++){
+        printf("%d", h.priority[j]);
+        if(j<h.n-1) printf(",");
+    }
+    printf("]");
+    printf("Heap: [");
+    for (k=0; k<h.nbElements;k++){
+        printf("%d",h.heap[k]);
+        if(k<h.nbElements-1) printf(",");
+    }
+    printf("]\n");
 }
 
 /**
